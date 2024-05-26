@@ -31,7 +31,13 @@ export async function POST(req: NextRequest) {
   });
 
   if (!user) {
-    return NextResponse.json({ error: "User Not Found !" }, { status: 404 });
+    return NextResponse.json(
+      {
+        error:
+          "کاربری با این نام کاربری وجود ندارد لطفا با پشتیبانی تماس بگیرید.",
+      },
+      { status: 404 }
+    );
   }
 
   const passwordMatch = await bcrypt.compare(password, user.password);
@@ -45,9 +51,10 @@ export async function POST(req: NextRequest) {
 
   const payload = {
     user_id: user.id,
+    user_role: user.role,
   };
 
   const token = jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: "1h" });
 
-  return NextResponse.json({ message: "خوش آمدید !", token }, { status: 200 });
+  return NextResponse.json({ token, role: user.role }, { status: 200 });
 }

@@ -7,6 +7,9 @@ import Logo from "@/public/images/logo.png";
 import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useForm, SubmitHandler } from "react-hook-form";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 type Inputs = {
   username: string;
@@ -15,15 +18,42 @@ type Inputs = {
 
 const LoginForm = () => {
   const [visible, setVisible] = useState<boolean>(false);
+  const router = useRouter();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log(data);
+    try {
+      const response = await axios.post("/api/auth/login", data);
+
+      if (response.status === 200) {
+        const { token, role } = response.data;
+
+        sessionStorage.setItem("token", token);
+
+        if (role === "admin") {
+          router.push("/admin/dashboard");
+        } else if (role === "writer") {
+          router.push("/writer/dashboard");
+        } else {
+          toast.error("ورود ناموفق، مشکلی پیش آمده است!");
+        }
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        const serverError = error.response.data.error;
+        setError("root", { message: serverError });
+        toast.error(serverError);
+      } else {
+        console.error("An unknown error occurred:", error);
+      }
+    }
   };
 
   return (
