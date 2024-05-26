@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
 
   const user = await prisma.user.findUnique({
     where: {
-      username: username,
+      username: username.toLowerCase(),
     },
   });
 
@@ -56,5 +56,21 @@ export async function POST(req: NextRequest) {
 
   const token = jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: "1h" });
 
-  return NextResponse.json({ token, role: user.role }, { status: 200 });
+  const response = NextResponse.json(
+    { token, role: user.role },
+    { status: 200 }
+  );
+
+  response.cookies.set("token", token, {
+    httpOnly: true,
+    secure: true,
+    path: "/",
+  });
+  response.cookies.set("role", user.role, {
+    httpOnly: true,
+    secure: true,
+    path: "/",
+  });
+
+  return response;
 }

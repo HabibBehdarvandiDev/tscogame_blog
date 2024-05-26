@@ -35,8 +35,6 @@ const LoginForm = () => {
       if (response.status === 200) {
         const { token, role } = response.data;
 
-        sessionStorage.setItem("token", token);
-
         if (role === "admin") {
           router.push("/admin/dashboard");
         } else if (role === "writer") {
