@@ -15,7 +15,7 @@ export async function middleware(request: NextRequest) {
   } else if (role === "writer" && url.pathname.startsWith("/writer")) {
     return NextResponse.next();
   } else {
-    return NextResponse.redirect(new URL("/auth/login", request.url));
+    return NextResponse.redirect(new URL("/unauthorize", request.url));
   }
 }
 
