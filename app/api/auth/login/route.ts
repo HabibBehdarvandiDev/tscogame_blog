@@ -1,4 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import prisma from "@/utils/db";
+import { LoginSchema } from "./LoginSchema";
 
 export async function POST(req: NextRequest) {
   let body;
@@ -12,5 +16,38 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  
+  const validation = LoginSchema.safeParse(body);
+
+  if (!validation.success) {
+    return NextResponse.json(validation.error.format(), { status: 404 });
+  }
+
+  const { username, password } = validation.data;
+
+  const user = await prisma.user.findUnique({
+    where: {
+      username: username,
+    },
+  });
+
+  if (!user) {
+    return NextResponse.json({ error: "User Not Found !" }, { status: 404 });
+  }
+
+  const passwordMatch = await bcrypt.compare(password, user.password);
+
+  if (!passwordMatch) {
+    return NextResponse.json(
+      { error: "رمز عبور و یا نام کاربری اشتباه است" },
+      { status: 401 }
+    );
+  }
+
+  const payload = {
+    user_id: user.id,
+  };
+
+  const token = jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: "1h" });
+
+  return NextResponse.json({ message: "خوش آمدید !", token }, { status: 200 });
 }
