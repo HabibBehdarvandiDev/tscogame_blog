@@ -1,5 +1,6 @@
 import React from "react";
 import HeaderCommand from "./HeaderCommand";
+import HeaderActions from "@/components/template/admin/HeaderActions";
 
 const AdminHeader = () => {
   return (
@@ -7,7 +8,9 @@ const AdminHeader = () => {
       <div className="header_command w-5/6">
         <HeaderCommand />
       </div>
-      <div className="header_actions w-2/6">actions</div>
+      <div className="header_actions w-2/6">
+        <HeaderActions />
+      </div>
     </header>
   );
 };

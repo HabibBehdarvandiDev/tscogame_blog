@@ -19,7 +19,7 @@ const HeaderCommand = () => {
       <div className="search-control relative">
         <Input
           placeholder="جستجوی نوشته و مقاله ..."
-          className="pr-10 placeholder:text-gray-400 "
+          className="pr-10 placeholder:text-gray-400 h-12 border-none"
           value={value}
           onChange={(e) => {
             setValue(e.target.value);
