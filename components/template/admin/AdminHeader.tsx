@@ -2,7 +2,12 @@ import React from 'react'
 
 const AdminHeader = () => {
   return (
-    <div>AdminHeader</div>
+    <header>
+      <div className="header_search">
+        
+      </div>
+      <div className="header_actions"></div>
+    </header>
   )
 }
 
