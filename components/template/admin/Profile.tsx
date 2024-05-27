@@ -19,7 +19,7 @@ const Profile = ({ userObj }: ProfileProps) => {
           <Avatar>
             <AvatarImage
               src={
-                userObj?.profileUrl ? userObj.profileUrl : UserDefaultImage.src
+                userObj?.profileUrl ? userObj.profileUrl : ""
               }
               alt="پروفایل"
             />

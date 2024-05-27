@@ -4,7 +4,7 @@ import HeaderActions from "@/components/template/admin/HeaderActions";
 
 const AdminHeader = () => {
   return (
-    <header className="flex flex-col md:flex-row gap-5">
+    <header className="flex flex-col lg:flex-row gap-5">
       <div className="header_command w-full sm:w-5/6">
         <HeaderCommand />
       </div>
