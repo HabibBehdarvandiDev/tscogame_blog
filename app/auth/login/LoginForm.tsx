@@ -10,6 +10,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import Spinner from "@/components/ui/Spinner";
 
 type Inputs = {
   username: string;
@@ -18,6 +19,7 @@ type Inputs = {
 
 const LoginForm = () => {
   const [visible, setVisible] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
   const {
@@ -28,7 +30,7 @@ const LoginForm = () => {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
+    setLoading(true);
     try {
       const response = await axios.post("/api/auth/login", data);
 
@@ -51,6 +53,8 @@ const LoginForm = () => {
       } else {
         console.error("An unknown error occurred:", error);
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -113,7 +117,7 @@ const LoginForm = () => {
         </div>
         <div className="form_control flex flex-col space-y-4">
           <Button className="w-full" type="submit">
-            ورود
+            {loading ? <Spinner /> : "ورود"}
           </Button>
 
           {errors.root && (
