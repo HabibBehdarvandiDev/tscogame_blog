@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `user` ADD COLUMN `profileUrl` VARCHAR(191) NOT NULL DEFAULT '';

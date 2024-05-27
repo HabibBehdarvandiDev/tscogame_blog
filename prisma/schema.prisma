@@ -19,10 +19,11 @@ enum UserRole {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  fisrtName String
-  lastname  String
-  username  String   @unique
-  password  String
-  role      UserRole @default(writer)
+  id         Int      @id @default(autoincrement())
+  fisrtName  String
+  lastname   String
+  username   String   @unique
+  password   String
+  role       UserRole @default(writer)
+  profileUrl String  @default("")
 }
