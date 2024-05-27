@@ -2,6 +2,7 @@
 
 import MessegaesButton from "./MessegaesButton";
 import NotificationButton from "./NotificationButton";
+import Profile from "./Profile";
 
 const HeaderActions = () => {
   return (
@@ -11,7 +12,9 @@ const HeaderActions = () => {
         <NotificationButton />
       </div>
       <div className="seperator w-[1px] h-9 bg-gray-200 rounded-md"></div>
-      <div>profile</div>
+      <div>
+        <Profile />
+      </div>
     </div>
   );
 };
