@@ -36,7 +36,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fa" dir="rtl">
-      <body className={`${Yekan.className} ${Yekan.variable}`}>
+      <body className={`${Yekan.className} ${Yekan.variable} transition-all duration-300`}>
         {children}
         <Toaster />
       </body>
