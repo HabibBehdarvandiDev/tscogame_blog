@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,17 +7,52 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum UserRole {
-  writer
-  admin
+model authors {
+  authorId Int    @id
+  user     user   @relation(fields: [authorId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "authors_ibfk_1")
+  blog     blog[]
 }
 
-model User {
-  id         Int      @id @default(autoincrement())
+model blog {
+  id       Int        @id @default(autoincrement())
+  title    String     @db.VarChar(255)
+  content  String     @db.Text
+  authorId Int?
+  approved Boolean?
+  authors  authors?   @relation(fields: [authorId], references: [authorId], onDelete: NoAction, onUpdate: NoAction, map: "blog_ibfk_1")
+  blogtags blogtags[]
+
+  @@index([authorId], map: "authorId")
+}
+
+model blogtags {
+  blogId Int
+  tagId  Int
+  blog   blog @relation(fields: [blogId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "blogtags_ibfk_1")
+  tags   tags @relation(fields: [tagId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "blogtags_ibfk_2")
+
+  @@id([blogId, tagId])
+  @@index([tagId], map: "tagId")
+}
+
+model tags {
+  Id       Int        @id @default(autoincrement())
+  tagName  String     @db.VarChar(255)
+  blogtags blogtags[]
+}
+
+model user {
+  id         Int       @id @default(autoincrement())
   fisrtName  String
   lastname   String
-  username   String   @unique
+  username   String    @unique(map: "User_username_key")
   password   String
-  role       UserRole @default(writer)
-  profileUrl String  @default("")
+  role       user_role @default(writer)
+  profileUrl String    @default("")
+  authors    authors?
+}
+
+enum user_role {
+  writer
+  admin
 }
