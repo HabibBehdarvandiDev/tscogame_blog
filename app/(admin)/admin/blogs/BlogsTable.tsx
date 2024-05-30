@@ -8,10 +8,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import prisma from "@/utils/db";
-
-import { BlogsSchema } from "@/types/BlogsTableType";
 import RowActions from "./RowActions";
 import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 
 const BlogsTable = async () => {
   const blogs = await prisma.blog.findMany({
@@ -50,13 +49,17 @@ const BlogsTable = async () => {
             </TableCell>
             <TableCell className="text-right">{blog.id}</TableCell>
             <TableCell className="text-right">{blog.title}</TableCell>
-            <TableCell className="text-right max-w-sm text-nowrap truncate">{blog.content}</TableCell>
+            <TableCell className="text-right max-w-[200px] text-nowrap truncate">
+              {blog.content}
+            </TableCell>
             <TableCell className="text-right">
-              <Badge className="text-nowrap">
-                {blog.blogtags
-                  .map((blogtag) => blogtag.tags.tagName)
-                  .join(", ")}
-              </Badge>
+              {blog.blogtags.map((blogtag, index) => (
+                <Badge key={index} className="text-nowrap mr-1 cursor-pointer">
+                  <Link href={`/admin/blogs/blogTag?=${blogtag.tags.tagName}`}>
+                    {blogtag.tags.tagName}
+                  </Link>
+                </Badge>
+              ))}
             </TableCell>
             <TableCell className="text-right">
               {blog.authors?.user?.fisrtName} {blog.authors?.user?.lastname}

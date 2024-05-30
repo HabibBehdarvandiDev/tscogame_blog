@@ -8,6 +8,12 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { BlogsSchema } from "@/types/BlogsTableType";
 import Spinner from "./ui/Spinner";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const BlogTableRowApproveButton = ({ blogId }: { blogId: number }) => {
   const [isApproved, setApproved] = useState<boolean>(false);
@@ -78,20 +84,29 @@ const BlogTableRowApproveButton = ({ blogId }: { blogId: number }) => {
   };
 
   return (
-    <Button
-      size={"icon"}
-      variant={"outline"}
-      onClick={handleApprove}
-      disabled={loading}
-    >
-      {loading ? (
-        <Spinner />
-      ) : isApproved ? (
-        <Checkmark className="w-5 h-5 text-green-500" />
-      ) : (
-        <SandClockIcon className="w-5 h-5 text-gray-400" />
-      )}
-    </Button>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger>
+          <Button
+            size={"icon"}
+            variant={"outline"}
+            onClick={handleApprove}
+            disabled={loading}
+          >
+            {loading ? (
+              <Spinner />
+            ) : isApproved ? (
+              <Checkmark className="w-5 h-5 text-green-500" />
+            ) : (
+              <SandClockIcon className="w-5 h-5 text-gray-400" />
+            )}
+          </Button>
+          <TooltipContent>
+            <p>{isApproved ? "لغو تایید" : "تایید"}</p>
+          </TooltipContent>
+        </TooltipTrigger>
+      </Tooltip>
+    </TooltipProvider>
   );
 };
 
