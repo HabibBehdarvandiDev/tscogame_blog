@@ -1,6 +1,5 @@
 "use server";
 import prisma from "@/utils/db";
-import MessegaesButton from "./MessegaesButton";
 import NotificationButton from "./NotificationButton";
 import Profile from "./Profile";
 import { jwtDecode } from "jwt-decode";
