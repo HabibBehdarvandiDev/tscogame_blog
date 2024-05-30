@@ -23,8 +23,6 @@ const HeaderActions = async () => {
 
       const user:UserObjType = await prisma.user.findFirst({ where: { id: userId } });
 
-      /* console.log(user); */
-
       return user;
     }
   };

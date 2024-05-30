@@ -9,6 +9,8 @@ import UserDefaultImage from "@/public/images/userDefaultImage.jpg";
 import { UserObjType } from "@/types/User";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
+import UserIcon from "@/components/icons/UserIcon";
+import DoorIcon from "@/components/icons/DoorIcon";
 
 type ProfileProps = {
   userObj?: UserObjType;
@@ -38,63 +40,21 @@ const Profile = ({ userObj }: ProfileProps) => {
         >
           <i>
             {" "}
-            <UserGroupIcon className="w-5 h-5" />{" "}
+            <UserIcon className="w-5 h-5" />{" "}
           </i>
-          <p>کاربران</p>
+          <p>پروفایل</p>
         </Link>
-        <Separator className="my-2" />
-        <Link
-          href={"#"}
-          className="flex gap-4 justify-start items-center align-middle hover:bg-gray-100/50 hover:text-primary p-2 rounded-xl"
-        >
-          <i>
-            {" "}
-            <UserGroupIcon className="w-5 h-5" />{" "}
-          </i>
-          <p>کاربران</p>
-        </Link>
-        <Link
-          href={"#"}
-          className="flex gap-4 justify-start items-center align-middle hover:bg-gray-100/50 hover:text-primary p-2 rounded-xl"
-        >
-          <i>
-            {" "}
-            <UserGroupIcon className="w-5 h-5" />{" "}
-          </i>
-          <p>کاربران</p>
-        </Link>
-        <Link
-          href={"#"}
-          className="flex gap-4 justify-start items-center align-middle hover:bg-gray-100/50 hover:text-primary p-2 rounded-xl"
-        >
-          <i>
-            {" "}
-            <UserGroupIcon className="w-5 h-5" />{" "}
-          </i>
-          <p>کاربران</p>
-        </Link>
-        <Link
-          href={"#"}
-          className="flex gap-4 justify-start items-center align-middle hover:bg-gray-100/50 hover:text-primary p-2 rounded-xl"
-        >
-          <i>
-            {" "}
-            <UserGroupIcon className="w-5 h-5" />{" "}
-          </i>
-          <p>کاربران</p>
-        </Link>
-        
         <Separator className="my-2" />
 
         <Link
-          href={"#"}
+          href={"/admin/profile"}
           className="flex gap-4 justify-start items-center align-middle text-primary p-2 rounded-xl"
         >
           <i>
             {" "}
-            <UserGroupIcon className="w-5 h-5" />{" "}
+            <DoorIcon className="w-5 h-5" />{" "}
           </i>
-          <p>کاربران</p>
+          <p>خروج</p>
         </Link>
       </PopoverContent>
     </Popover>
