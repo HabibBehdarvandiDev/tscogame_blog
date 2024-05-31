@@ -3,6 +3,7 @@ import BlogTableRowDeleteButton from "@/components/BlogTableRowDeleteButton";
 import MessageToWriter from "@/components/MessageToWriter";
 import { Badge } from "@/components/ui/badge";
 import prisma from "@/utils/db";
+import AuthorDetail from "./AuthorDetail";
 
 const BlogPage = async ({ params }: { params: { blogId: string } }) => {
   const { blogId } = params;
@@ -56,7 +57,9 @@ const BlogPage = async ({ params }: { params: { blogId: string } }) => {
           </div>
           <section className="mt-5">{blog.content}</section>
         </div>
-        <aside className="bg-white shadow-sm p-4 w-1/6 rounded-xl">aside</aside>
+        <aside className="bg-transparent shadow-sm p-4 w-1/6 rounded-xl">
+          <AuthorDetail authorId={blog.authorId!} />
+        </aside>
       </section>
     </div>
   );
