@@ -42,14 +42,30 @@ model tags {
 }
 
 model user {
-  id         Int       @id @default(autoincrement())
-  fisrtName  String
-  lastname   String
-  username   String    @unique(map: "User_username_key")
-  password   String
-  role       user_role @default(writer)
-  profileUrl String    @default("")
-  authors    authors?
+  id                               Int       @id @default(autoincrement())
+  fisrtName                        String
+  lastname                         String
+  username                         String    @unique(map: "User_username_key")
+  password                         String
+  role                             user_role @default(writer)
+  profileUrl                       String    @default("")
+  authors                          authors?
+  message_message_fromUserIdTouser message[] @relation("message_fromUserIdTouser")
+  message_message_toUserIdTouser   message[] @relation("message_toUserIdTouser")
+}
+
+model message {
+  id                            Int       @id @default(autoincrement())
+  fromUserId                    Int?
+  toUserId                      Int?
+  title                         String?   @db.VarChar(255)
+  message                       String?   @db.Text
+  createdAt                     DateTime? @default(now()) @db.Timestamp(0)
+  user_message_fromUserIdTouser user?     @relation("message_fromUserIdTouser", fields: [fromUserId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "message_ibfk_1")
+  user_message_toUserIdTouser   user?     @relation("message_toUserIdTouser", fields: [toUserId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "message_ibfk_2")
+
+  @@index([fromUserId], map: "fromUserId")
+  @@index([toUserId], map: "toUserId")
 }
 
 enum user_role {

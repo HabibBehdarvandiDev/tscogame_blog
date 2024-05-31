@@ -62,12 +62,12 @@ export async function POST(req: NextRequest) {
   );
 
   response.cookies.set("token", token, {
-    httpOnly: true,
+    httpOnly: false,
     secure: true,
     path: "/",
   });
   response.cookies.set("role", user.role, {
-    httpOnly: true,
+    httpOnly: false,
     secure: true,
     path: "/",
   });

@@ -1,7 +1,7 @@
 import prisma from "@/utils/db";
 import { NextRequest, NextResponse } from "next/server";
 import { BlogSchema, PartialBlogSchema } from "./shcema";
-import { z } from "zod";
+
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
