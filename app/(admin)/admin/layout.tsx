@@ -1,4 +1,3 @@
-import AdminAside from "@/components/template/admin/AdminAside";
 import AdminHeader from "@/components/template/admin/AdminHeader";
 import AdminNavigation from "@/components/template/admin/AdminNavigation";
 

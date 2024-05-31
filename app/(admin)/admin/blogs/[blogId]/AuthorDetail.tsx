@@ -1,14 +1,13 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from "@/components/ui/card";
-import prisma from "@/utils/db";
 import { AuthorSchema } from "@/schemas/AuthorScheam";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import prisma from "@/utils/db";
 import AuthorRank from "./AuthorRank";
 
 const AuthorDetail = async ({ authorId }: { authorId: number }) => {
