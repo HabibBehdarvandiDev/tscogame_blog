@@ -6,7 +6,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex w-screen h-screen overflow-hidden gap-3 justify-between">
       <AdminNavigation />
-      <main className="w-full flex flex-col gap-6 p-6 bg-gray-50">
+      <main className="w-full flex flex-col gap-6 p-6 bg-gray-100">
         <AdminHeader />
         {children}
       </main>

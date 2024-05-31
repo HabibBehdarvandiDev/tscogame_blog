@@ -30,14 +30,15 @@ const AuthorDetail = async ({ authorId }: { authorId: number }) => {
             <AvatarFallback>کاربر</AvatarFallback>
           </Avatar>
 
-          <p className="text-xl text-right font-semibold">
-            {author?.username} @
+          <p className="text-xl text-right font-semibold text-nowrap">
+            {author?.username}
           </p>
         </div>
         <p className="text-gray-400">
+          {"نام  : "}{" "}
           {author?.fisrtName} {author?.lastname}
         </p>
-        <Badge className="w-fit">{author?.role}</Badge>
+        <Badge className="w-fit" >{author?.role}</Badge>
 
         <AuthorRank />
       </CardContent>

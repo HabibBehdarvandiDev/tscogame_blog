@@ -44,7 +44,7 @@ const BlogPage = async ({ params }: { params: { blogId: string } }) => {
       <section className="flex mt-5 w-full gap-2">
         <div className="bg-white shadow-sm p-4 w-5/6 rounded-xl h-[75vh] overflow-x-hidden">
           <div className="flex flex-col gap-3">
-            <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+            <h1 className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl px-5 ">
               {blog.title}
             </h1>
             <div className="flex gap-2">
