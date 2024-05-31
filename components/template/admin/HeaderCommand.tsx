@@ -1,17 +1,49 @@
 "use client";
 
 import SearchIcon from "@/components/icons/SearchIcon";
+import Spinner from "@/components/ui/Spinner";
 import { Input } from "@/components/ui/input";
 import { AdminDashboardNav } from "@/routes/AdminDashboardNav";
+import { BlogSchema } from "@/schemas/BlogSchema";
+import axios from "axios";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const HeaderCommand = () => {
   const [value, setValue] = useState("");
   const [isContainerVisible, setIsContainerVisible] = useState(false);
+  const [blogs, setBlogs] = useState<BlogSchema[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const filterRoutes = AdminDashboardNav.filter((route) => {
-    return route.title.toLowerCase().includes(value.toLowerCase());
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      if (value) {
+        setLoading(true);
+        try {
+          const response = await axios.get(`/api/blog`);
+          const reponseData: BlogSchema[] = response.data;
+          setBlogs(reponseData);
+          setIsContainerVisible(true);
+        } catch (error) {
+          console.error("Error fetching blogs:", error);
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        setIsContainerVisible(false);
+        setBlogs([]);
+      }
+    };
+
+    const delayDebounceFn = setTimeout(() => {
+      fetchBlogs();
+    }, 300);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [value]);
+
+  const filterBlogs = blogs.filter((blog) => {
+    return blog.title.toLowerCase().includes(value.toLowerCase());
   });
 
   return (
@@ -28,15 +60,17 @@ const HeaderCommand = () => {
         />
         <i className="text-gray-400 absolute top-1/2 right-4 -translate-y-1/2">
           {" "}
-          <SearchIcon className="w-5 h-5" />{" "}
+          <SearchIcon className="w-5 h-5 text-primary" />{" "}
         </i>
       </div>
       {isContainerVisible && (
         <div className="mt-2 bg-white border border-gray-300 rounded-md shadow-lg p-4">
-          {filterRoutes.length > 0 ? (
-            filterRoutes.map((route, index) => (
+          {loading ? (
+            <Spinner />
+          ) : filterBlogs.length > 0 ? (
+            filterBlogs.map((blog, index) => (
               <Link
-                href={route.href}
+                href={`/admin/blogs/${blog.id}`}
                 key={index}
                 className="block px-4 py-2 text-sm hover:bg-gray-100"
                 passHref
@@ -45,7 +79,7 @@ const HeaderCommand = () => {
                   setIsContainerVisible(false);
                 }}
               >
-                {route.title}
+                {blog.title}
               </Link>
             ))
           ) : (
