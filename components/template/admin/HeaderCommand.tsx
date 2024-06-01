@@ -13,7 +13,7 @@ const HeaderCommand = () => {
   const [value, setValue] = useState("");
   const [isContainerVisible, setIsContainerVisible] = useState(false);
   const [blogs, setBlogs] = useState<BlogSchema[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -47,7 +47,7 @@ const HeaderCommand = () => {
   });
 
   return (
-    <div>
+    <div className="relative">
       <div className="search-control relative">
         <Input
           placeholder="جستجوی نوشته و مقاله ..."
@@ -64,7 +64,7 @@ const HeaderCommand = () => {
         </i>
       </div>
       {isContainerVisible && (
-        <div className="mt-2 bg-white border border-gray-300 rounded-md shadow-lg p-4">
+        <div className="mt-2 bg-white rounded-md shadow-sm p-4 absolute w-full">
           {loading ? (
             <Spinner />
           ) : filterBlogs.length > 0 ? (
